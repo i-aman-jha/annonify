@@ -1,5 +1,7 @@
-import 'package:annonify/config/Theme/colors.dart';
+import 'package:annonify/configs/Theme/colors.dart';
+import 'package:annonify/controller/theme_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FileTile extends StatelessWidget {
   final String title;
@@ -15,22 +17,30 @@ class FileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.find<ThemeController>();
+    Color secondaryTextColor = (themeController.isDark.value)
+        ? DarkThemeColors.secondaryTextColor
+        : LightThemeColors.secondaryTextColor;
+    Color highlightColor = (themeController.isDark.value)
+        ? DarkThemeColors.highlightColor
+        : LightThemeColors.highlightColor;
+
     return ListTile(
       leading: Container(
         height: 36,
         width: 36,
-        decoration: const BoxDecoration(
-          color: ThemeColors.secondaryTextColor,
-          borderRadius: BorderRadius.all(Radius.circular(6)),
+        decoration: BoxDecoration(
+          color: secondaryTextColor,
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
         ),
         child: (link)
-            ? const Icon(
+            ? Icon(
                 Icons.link,
-                color: ThemeColors.selectedColor,
+                color: highlightColor,
               )
-            : const Icon(
+            : Icon(
                 Icons.folder_open,
-                color: ThemeColors.selectedColor,
+                color: highlightColor,
               ),
       ),
       title: Text(

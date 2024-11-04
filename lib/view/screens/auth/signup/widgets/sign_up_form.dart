@@ -1,5 +1,6 @@
-import 'package:annonify/config/Theme/colors.dart';
+import 'package:annonify/configs/Theme/colors.dart';
 import 'package:annonify/controller/auth/sign_up_controller.dart';
+import 'package:annonify/controller/theme_controller.dart';
 import 'package:annonify/utils/validator/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,10 @@ class SignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
+    final ThemeController themeController = Get.find<ThemeController>();
+    Color textHeading = (themeController.isDark.value)
+        ? DarkThemeColors.textHeading
+        : LightThemeColors.textHeading;
 
     return Form(
       key: controller.signUpFormKey,
@@ -19,7 +24,7 @@ class SignUpForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
-              cursorColor: ThemeColors.textHeading,
+              cursorColor: textHeading,
               keyboardType: TextInputType.emailAddress,
               controller: controller.emailController,
               decoration: const InputDecoration(
@@ -30,7 +35,7 @@ class SignUpForm extends StatelessWidget {
             const SizedBox(height: 15),
             Obx(
               () => TextFormField(
-                cursorColor: ThemeColors.textHeading,
+                cursorColor: textHeading,
                 obscureText: controller.hidePassword.value,
                 controller: controller.passwordController,
                 validator: (value) => Validator.validatePassword(value),
@@ -51,7 +56,7 @@ class SignUpForm extends StatelessWidget {
             const SizedBox(height: 15),
             Obx(
               () => TextFormField(
-                cursorColor: ThemeColors.textHeading,
+                cursorColor: textHeading,
                 obscureText: controller.hideConfPassword.value,
                 controller: controller.confPassController,
                 validator: (value) => Validator.validatePassword(value),

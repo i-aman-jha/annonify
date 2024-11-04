@@ -1,5 +1,6 @@
-import 'package:annonify/config/Theme/colors.dart';
+import 'package:annonify/configs/Theme/colors.dart';
 import 'package:annonify/controller/chat/chat_controller.dart';
+import 'package:annonify/controller/theme_controller.dart';
 import 'package:annonify/view/Screens/Chat/chat_details.dart';
 import 'package:annonify/view/Widgets/ellipsis_text.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,19 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ChatController());
+    final ThemeController themeController = Get.find<ThemeController>();
+    Color contentBG = (themeController.isDark.value)
+        ? DarkThemeColors.contentBG
+        : LightThemeColors.contentBG;
+    final Color secondaryTextColor = (themeController.isDark.value)
+        ? DarkThemeColors.secondaryTextColor
+        : LightThemeColors.secondaryTextColor;
+    final Color primaryColor = (themeController.isDark.value)
+        ? DarkThemeColors.primaryColor
+        : LightThemeColors.primaryColor;
 
     return Scaffold(
-      appBar: _buildAppBar(context),
+      appBar: _buildAppBar(context, primaryColor),
       body: Column(
         children: [
           Expanded(
@@ -32,9 +43,9 @@ class ChatScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
-            decoration: const BoxDecoration(
-              color: ThemeColors.contentBG,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: contentBG,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
               ),
@@ -47,13 +58,13 @@ class ChatScreen extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.attach_file,
-                    color: ThemeColors.accentColor,
+                    color: DarkThemeColors.accentColor,
                   ),
                 ),
                 Expanded(
                   child: TextFormField(
                     style: Theme.of(context).textTheme.displaySmall,
-                    cursorColor: ThemeColors.secondaryTextColor,
+                    cursorColor: secondaryTextColor,
                     controller: controller.messageController,
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 8),
@@ -62,7 +73,8 @@ class ChatScreen extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: ThemeColors.accentColor),
+                        borderSide:
+                            BorderSide(color: DarkThemeColors.accentColor),
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                     ),
@@ -74,7 +86,7 @@ class ChatScreen extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.send,
-                    color: ThemeColors.accentColor,
+                    color: DarkThemeColors.accentColor,
                   ),
                 ),
               ],
@@ -86,12 +98,12 @@ class ChatScreen extends StatelessWidget {
   }
 }
 
-AppBar _buildAppBar(BuildContext context) {
+AppBar _buildAppBar(BuildContext context, Color primaryColor) {
   return AppBar(
-    leadingWidth: 40,
+    // leadingWidth: 20,
     flexibleSpace: Container(
       decoration: BoxDecoration(
-        color: ThemeColors.primaryColor,
+        color: primaryColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.4),
@@ -103,7 +115,7 @@ AppBar _buildAppBar(BuildContext context) {
     ),
     leading: IconButton(
       onPressed: () {
-        // Handle back action
+        Get.back();
       },
       icon: const Icon(Icons.arrow_back_ios_new),
     ),

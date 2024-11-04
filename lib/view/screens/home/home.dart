@@ -1,9 +1,11 @@
-import 'package:annonify/config/Theme/colors.dart';
+import 'package:annonify/configs/Theme/colors.dart';
+import 'package:annonify/controller/theme_controller.dart';
 import 'package:annonify/view/Screens/Home/all_chats.dart';
 import 'package:annonify/view/Screens/Home/links.dart';
 import 'package:annonify/view/Screens/Home/media.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,6 +46,7 @@ class _HomePageState extends State<HomePage>
 }
 
 AppBar _buildAppBar(TabController tabController) {
+  final themeController = Get.find<ThemeController>();
   return AppBar(
     toolbarHeight: 64,
     title: const Text(
@@ -53,26 +56,31 @@ AppBar _buildAppBar(TabController tabController) {
     leading: IconButton(
       icon: const Icon(
         Icons.search,
-        color: ThemeColors.accentColor,
+        color: DarkThemeColors.accentColor,
       ),
       onPressed: () {},
     ),
     actions: [
       Padding(
         padding: const EdgeInsets.only(right: 14),
-        child: CircleAvatar(
-          child: SvgPicture.asset("assets/image/group_logo.svg"),
+        child: InkWell(
+          onTap: () {
+            print("object");
+            themeController.toggleTheme();
+          },
+          child: ClipOval(
+            child: SvgPicture.asset(
+              "assets/images/group_logo.svg",
+              height: 40,
+              width: 40,
+            ),
+          ),
         ),
       ),
     ],
     bottom: TabBar(
-      labelColor: ThemeColors.textHeading,
-      indicatorColor: ThemeColors.accentColor,
       padding: const EdgeInsets.symmetric(vertical: 10),
-      labelPadding: const EdgeInsets.symmetric(vertical: 14),
-      unselectedLabelColor: ThemeColors.textSubHeading,
       controller: tabController,
-      dividerColor: Colors.transparent,
       tabs: const [
         Text("All Chats"),
         Text("Media"),

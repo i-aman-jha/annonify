@@ -1,11 +1,11 @@
-import 'package:annonify/config/Theme/dark_theme.dart';
-import 'package:annonify/view/Screens/Chat/chat_details.dart';
-import 'package:annonify/view/Screens/Chat/chat_screen.dart';
+import 'package:annonify/configs/Theme/dark_theme.dart';
+import 'package:annonify/configs/Theme/light_theme.dart';
+import 'package:annonify/configs/routes/app_router.dart';
+import 'package:annonify/controller/theme_controller.dart';
 import 'package:annonify/view/screens/auth/signIn/sign_in.dart';
-import 'package:annonify/view/screens/auth/signup/sign_up.dart';
-import 'package:annonify/view/screens/auth/signup/widgets/choose_avatar.dart';
 import 'package:annonify/view/screens/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,12 +16,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Annonify',
-      theme: darkTheme,
-      darkTheme: darkTheme,
-      home: const SignInPage(),
-    );
+    final themeController = Get.put(ThemeController());
+    return Obx(() {
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Annonify',
+        themeMode: themeController.themeMode,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        getPages: AppRouter.routes,
+        home: const HomePage(),
+      );
+    });
   }
 }

@@ -1,15 +1,22 @@
-import 'package:annonify/config/Theme/colors.dart';
+import 'package:annonify/configs/Theme/colors.dart';
+import 'package:annonify/controller/theme_controller.dart';
 import 'package:annonify/view/Widgets/ellipsis_text.dart';
 import 'package:annonify/view/screens/chat/widgets/file_tile.dart';
 import 'package:annonify/view/widgets/my_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class ChatDetails extends StatelessWidget {
   const ChatDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.find<ThemeController>();
+    Color contentBG = (themeController.isDark.value)
+        ? DarkThemeColors.contentBG
+        : LightThemeColors.contentBG;
+
     return SafeArea(
       child: Scaffold(
         // appBar: _buildAppBar(),
@@ -22,9 +29,9 @@ class ChatDetails extends StatelessWidget {
             SliverToBoxAdapter(
               child: Container(
                 padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
-                decoration: const BoxDecoration(
-                  color: ThemeColors.contentBG,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: contentBG,
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(24),
                     topRight: Radius.circular(24),
                   ),

@@ -1,4 +1,4 @@
-import 'package:annonify/config/Theme/colors.dart';
+import 'package:annonify/configs/Theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,7 +20,7 @@ class ChooseAvatar extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  color: ThemeColors.accentColor,
+                  color: DarkThemeColors.accentColor,
                 ),
               ),
               const SizedBox(height: 30),
